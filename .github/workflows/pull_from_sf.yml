@@ -1,0 +1,59 @@
+name: Pull Salesforce Metadata and Commit
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # At 00:00 on day-of-month 1
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  pull-metadata:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Gives write permission to the entire job
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js (includes npm)
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install Salesforce CLI
+      run: |
+        npm install --global sfdx-cli
+        sfdx --version
+
+    - name: Authenticate Salesforce Org
+      env:
+        SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+      run: |
+        echo $SFDX_AUTH_URL > sfdx.url
+        sfdx auth:sfdxurl:store -f sfdx.url -a production
+        rm sfdx.url
+
+    - name: Pull Metadata
+      run: |
+        mkdir -p metadata
+        sfdx force:source:retrieve -m ApexClass,ApexTrigger,CustomObject -u production -r ./metadata
+        cp -r ./metadata/* ./force-app/main/default/
+        rm -rf ./metadata
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "developerharb"
+        git config --global user.email "developer@harborcoatconsulting.com"
+
+    - name: Commit Changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        if [ "$(git status --porcelain)" != "" ]; then
+          git add .
+          git commit -m "Updated Salesforce Metadata: $(date)"
+          git push origin main
+        else
+          echo "No changes detected"
+        fi

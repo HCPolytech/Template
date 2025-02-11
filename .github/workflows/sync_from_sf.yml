@@ -7,7 +7,7 @@ on:
         required: true
         type: string
     secrets:
-      github_token:
+      gh_token:
         required: true
       sfdx_auth_url:
         required: true
@@ -54,7 +54,7 @@ jobs:
 
     - name: Commit Changes
       env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
+        GITHUB_TOKEN: ${{ secrets.gh_token }}
         BRANCH_NAME: ${{ inputs.branch }}
       run: |
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"

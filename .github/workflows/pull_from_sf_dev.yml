@@ -11,9 +11,9 @@ jobs:
     permissions: 
       contents: write
       pull-requests: write
-    uses: .github/workflows/sync_from_sf/sync_from_sf.yml@main
+    uses: ./.github/workflows/sync_from_sf.yml
     with:
       branch: dev
     secrets:
-      github_token: ${{ secrets.GH_TOKEN }}
+      gh_token: ${{ secrets.GH_TOKEN }}
       sfdx_auth_url: ${{ secrets.SFDX_DEV_AUTH_URL }}

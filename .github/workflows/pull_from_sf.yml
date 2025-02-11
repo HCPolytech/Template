@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Gives write permission to the entire job
+    if: ${{ github.event_name == 'workflow_dispatch' || secrets.DISABLE_SCHEDULE != 'TRUE' }}
 
     steps:
     - name: Checkout repository

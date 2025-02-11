@@ -21,6 +21,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.branch }}
+        fetch-depth: 0
 
     - name: Set up Node.js (includes npm)
       uses: actions/setup-node@v3

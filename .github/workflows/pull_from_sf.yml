@@ -2,7 +2,7 @@ name: PROD - Pull Salesforce Metadata and Commit
 
 on:
   schedule:
-    - cron: "0 0 1 * *" # At 00:00 on day-of-month 1
+    - cron: "0 0 * * SUN" # At 00:00 on Sunday
   workflow_dispatch: # Allows manual trigger
 
 jobs:

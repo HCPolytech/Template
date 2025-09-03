@@ -11,7 +11,7 @@ jobs:
     permissions: 
       contents: write
       pull-requests: write
-    uses: ./.github/workflows/sync_from_sf.yml
+    uses: HCPolytech/SyncFromSF/.github/workflows/sync_from_sf.yml@main
     with:
       branch: dev
     secrets:

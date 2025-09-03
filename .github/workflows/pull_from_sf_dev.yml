@@ -15,5 +15,4 @@ jobs:
     with:
       branch: dev
     secrets:
-      gh_token: ${{ secrets.GH_TOKEN }}
       sfdx_auth_url: ${{ secrets.SFDX_DEV_AUTH_URL }}

@@ -15,5 +15,4 @@ jobs:
     with:
       branch: main
     secrets:
-      gh_token: ${{ secrets.GH_TOKEN }}
       sfdx_auth_url: ${{ secrets.SFDX_AUTH_URL }}

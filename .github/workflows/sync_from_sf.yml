@@ -44,7 +44,7 @@ jobs:
     - name: Pull Metadata
       run: |
         mkdir -p metadata
-        sfdx force:source:retrieve -m ApexClass,ApexTrigger,CustomObject,ApexPage,AuraDefinitionBundle,LightningComponentBundle,FlowDefinition,Flow -u production -r ./metadata
+        sfdx force:source:retrieve -m ApexClass,ApexTrigger,CustomObject,ApexPage,AuraDefinitionBundle,LightningComponentBundle,FlowDefinition,Flow,EmailTemplate -u production -r ./metadata
         cp -r ./metadata/* ./force-app/main/default/
         rm -rf ./metadata
 
